@@ -1,0 +1,131 @@
+{
+  "numeric_cols": [
+    "Administrative",
+    "Administrative_Duration",
+    "Informational",
+    "Informational_Duration",
+    "ProductRelated",
+    "ProductRelated_Duration",
+    "BounceRates",
+    "ExitRates",
+    "PageValues",
+    "SpecialDay",
+    "OperatingSystems",
+    "Browser",
+    "Region",
+    "TrafficType"
+  ],
+  "numeric_means": [
+    2.327694090382387,
+    82.6661182227394,
+    0.49860950173812285,
+    34.6491016510197,
+    31.594090382387023,
+    1191.4239225629424,
+    0.022330387975202783,
+    0.04328638825654693,
+    6.033228121050754,
+    0.06099652375434532,
+    2.121784472769409,
+    2.347856315179606,
+    3.1611819235225957,
+    4.033951332560834
+  ],
+  "numeric_scales": [
+    3.320034362866441,
+    181.48165588089404,
+    1.2784642489814184,
+    141.91206290137126,
+    43.25868602268197,
+    1813.2839468158259,
+    0.04861477643299645,
+    0.048761973126549014,
+    18.842859553190085,
+    0.1984095013633493,
+    0.9139706529615772,
+    1.7042559819827776,
+    2.407664373203909,
+    4.000913167196179
+  ],
+  "categorical_cols": [
+    "Month",
+    "VisitorType",
+    "Weekend"
+  ],
+  "categorical_levels": {
+    "Month": [
+      "Aug",
+      "Dec",
+      "Feb",
+      "Jul",
+      "June",
+      "Mar",
+      "May",
+      "Nov",
+      "Oct",
+      "Sep"
+    ],
+    "VisitorType": [
+      "New_Visitor",
+      "Other",
+      "Returning_Visitor"
+    ],
+    "Weekend": [
+      "False",
+      "True"
+    ]
+  },
+  "feature_order": [
+    "num__Administrative",
+    "num__Administrative_Duration",
+    "num__Informational",
+    "num__Informational_Duration",
+    "num__ProductRelated",
+    "num__ProductRelated_Duration",
+    "num__BounceRates",
+    "num__ExitRates",
+    "num__PageValues",
+    "num__SpecialDay",
+    "num__OperatingSystems",
+    "num__Browser",
+    "num__Region",
+    "num__TrafficType",
+    "cat__Month_Aug",
+    "cat__Month_Dec",
+    "cat__Month_Feb",
+    "cat__Month_Jul",
+    "cat__Month_June",
+    "cat__Month_Mar",
+    "cat__Month_May",
+    "cat__Month_Nov",
+    "cat__Month_Oct",
+    "cat__Month_Sep",
+    "cat__VisitorType_New_Visitor",
+    "cat__VisitorType_Other",
+    "cat__VisitorType_Returning_Visitor",
+    "cat__Weekend_False",
+    "cat__Weekend_True"
+  ],
+  "threshold": 0.67,
+  "numeric_defaults": {
+    "Administrative": 2.327694090382387,
+    "Administrative_Duration": 82.6661182227394,
+    "Informational": 0.49860950173812285,
+    "Informational_Duration": 34.6491016510197,
+    "ProductRelated": 31.594090382387023,
+    "ProductRelated_Duration": 1191.4239225629424,
+    "BounceRates": 0.022330387975202783,
+    "ExitRates": 0.04328638825654693,
+    "PageValues": 6.033228121050754,
+    "SpecialDay": 0.06099652375434532,
+    "OperatingSystems": 2.121784472769409,
+    "Browser": 2.347856315179606,
+    "Region": 3.1611819235225957,
+    "TrafficType": 4.033951332560834
+  },
+  "categorical_defaults": {
+    "Month": "Aug",
+    "VisitorType": "New_Visitor",
+    "Weekend": "False"
+  }
+}
