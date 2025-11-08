@@ -6,85 +6,60 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>OSPI — Purchase Intent Predictor (Kaggle)</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
-<style>
-  :root{
-    --bg:#0b0e13;        /* page background */
-    --surface:#121826;   /* cards */
-    --surface-2:#0f1522; /* inner panels */
-    --border:#1f2a3a;    /* borders */
-    --text:#e9eef5;      /* primary text */
-    --muted:#aab3c2;     /* secondary text */
-    --primary:#2e6cff;   /* primary button */
-    --primary-600:#255ae0;
-    --ring:#3b82f6;      /* focus ring */
-  }
-
-  * { box-sizing: border-box; }
-  html,body{ height:100%; }
-  body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; margin:0; background:var(--bg); color:var(--text); }
-  .wrap { max-width: 1080px; margin: 0 auto; padding:24px; }
-
-  h1 { font-size: 1.7rem; margin: 0 0 8px; letter-spacing:.2px; }
-  p.sub { color:var(--muted); margin:0 0 16px; }
-
-  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:18px; }
-  .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-
-  .card {
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:16px;
-    box-shadow: 0 2px 12px rgba(0,0,0,.25);
-  }
-
-  label { display:block; font-size:.9rem; margin-bottom:6px; color:#cdd7e5; }
-  input[type=number],select {
-    width:100%;
-    padding:10px 12px;
-    border-radius:10px;
-    border:1px solid #2a3445;
-    background:#0f1522;
-    color:var(--text);
-    outline: none;
-    transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
-  }
-  input[type=number]:focus, select:focus {
-    border-color: var(--ring);
-    box-shadow: 0 0 0 3px rgba(59,130,246,.25);
-    background:#111a2a;
-  }
-
-  .actions { display:flex; gap:12px; margin-top:10px; align-items:center; }
-
-  .btn { appearance:none; border:none; border-radius:12px; padding:10px 16px; cursor:pointer; font-weight:600; }
-  .btn:disabled { opacity:.55; cursor:not-allowed; }
-  .btn-primary { background:var(--primary); color:#fff; }
-  .btn-primary:hover { background:var(--primary-600); }
-  .btn-secondary { background:#404a5f; color:#e9eef5; }
-  .btn-secondary:hover { background:#364153; }
-
-  .muted { color:var(--muted); font-size:.9rem; }
-
-  .result { padding:16px; border-radius:14px; background:var(--surface-2); border:1px solid #2a3445; }
-  .prob { font-size:1.35rem; }
-  #err { color:#ff9c9c; margin-top:10px; white-space:pre-wrap; }
-
-  /* Compact spacing on tiny screens */
-  @media (max-width: 520px){
-    .wrap { padding:16px; }
-    .row { gap:8px; }
-    .btn { padding:9px 14px; }
-  }
-</style>
+<link rel="stylesheet" href="./styles.css?v=1">
 </head>
 <body>
 <div class="wrap">
   <h1>Online Shoppers Purchasing Intention — Live Demo</h1>
-  <p class="sub">Runs a PyTorch MLP (ONNX) with onnxruntime-web (UMD). Kaggle-safe (no fetch for model/JSON).</p>
+  <p class="sub">Runs a PyTorch MLP (ONNX) in your browser with onnxruntime-web. Kaggle-safe (no fetch for model/JSON).</p>
+
+  <!-- About / How it works -->
+  <div class="card" id="about">
+    <details open>
+      <summary>About this demo</summary>
+      <p>
+        This page estimates the probability that a web session ends in a purchase.
+        It uses a PyTorch MLP exported to <b>ONNX</b> and runs fully in your browser with <b>onnxruntime-web</b>.
+        No data is sent to any server.
+      </p>
+
+      <div class="grid about-grid">
+        <div class="card card-compact">
+          <b>Dataset</b><br>
+          UCI Online Shoppers Purchasing Intention (12,330 sessions, ~15.5% positive).
+        </div>
+        <div class="card card-compact">
+          <b>Split</b><br>
+          Stratified 70% train / 15% validation / 15% test. Threshold tuned on VAL.
+        </div>
+        <div class="card card-compact">
+          <b>Best model</b><br>
+          MLP (128-64-32) with class-imbalance weighting; exported to ONNX.
+        </div>
+        <div class="card card-compact">
+          <b>Test performance</b><br>
+          F1(positive) ≈ 0.65 • Macro-F1 ≈ 0.79 • ROC-AUC ≈ 0.92 • PR-AUC ≈ 0.70 • Tuned threshold ≈ 0.67
+        </div>
+      </div>
+
+      <h4 style="margin:14px 0 6px;">How to use</h4>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Use the inputs to describe a browsing session (e.g., pages viewed, durations, month, visitor type, weekend).</li>
+        <li>Click <b>Predict</b> to get the purchase probability and the class label.</li>
+        <li>Adjust the <b>Threshold</b> to see how the decision boundary changes (higher = stricter).</li>
+        <li>Try the <b>presets</b> for quick examples (high-intent, bounce, researching).</li>
+      </ul>
+
+      <h4 style="margin:14px 0 6px;">Notes</h4>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Important drivers in this model (by permutation): <i>PageValues</i>, <i>Month</i>, <i>ProductRelated</i>/<i>Duration</i>, and <i>ExitRates</i>.</li>
+        <li>Imbalanced data: the model optimizes for F1 of the purchase class; accuracy alone can be misleading.</li>
+      </ul>
+    </details>
+  </div>
 
   <!-- Presets -->
-  <div class="card" style="margin-bottom:16px;">
+  <div class="card preset-card">
     <div class="row">
       <label for="exampleSelect" class="muted">Try a preset:</label>
       <select id="exampleSelect" style="min-width:280px;">
@@ -107,7 +82,7 @@
     <div class="actions">
       <button id="predictBtn" class="btn btn-primary">Predict</button>
     </div>
-    <div class="result" style="margin-top:14px;">
+    <div class="result">
       <div class="prob">Probability of Purchase: <b id="prob">–</b></div>
       <div>Predicted Class: <b id="cls">–</b></div>
       <div id="err"></div>
